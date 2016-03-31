@@ -12,6 +12,8 @@ case ${1} in
     configure_gitlab_shell
     configure_nginx
 
+    store_user_authentication_token
+
     case ${1} in
       app:start)
         migrate_database
