@@ -193,6 +193,23 @@ gitlab_check_database_connection() {
   echo
 }
 
+store_user_authentication_token() {
+    case ${DB_ADAPTER} in
+        mysql2)
+            echo "No mysql support for broto!" 1>&2
+            exit 1
+        ;;
+        postgresql)
+            QUERY="SELECT authentication_token from users WHERE username='$ROOT_USERNAME'"
+            TOKEN=$(PGPASSWORD="${DB_PASS}" psql -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME} -Atw -c "${QUERY}")
+            echo "The auth token should be here"
+            echo $TOKEN
+            echo $AUTHENTICATION_TOKEN_FILE
+            echo $TOKEN > $AUTHENTICATION_TOKEN_FILE
+            ;;
+    esac
+}
+
 gitlab_configure_database() {
   echo -n "Configuring gitlab::database"
 
