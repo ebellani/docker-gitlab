@@ -59,6 +59,8 @@ broto:
     - IMAP_STARTTLS=false
   volumes:
     - /srv/docker/gitlab/gitlab:/home/git/data
+    - /srv/docker/broto/:/var/run/broto
+
 redis:
   restart: always
   image: sameersbn/redis:latest
